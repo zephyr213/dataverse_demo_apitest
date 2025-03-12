@@ -1,0 +1,76 @@
+# ref: https://guides.dataverse.org/en/latest/api/native-api.html#create-dataverse-api
+#
+
+#1. create a dataverse collection
+
+export API_TOKEN=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+export SERVER_URL=https://demo.dataverse.org
+export PARENT=root
+
+
+# -X POST http request method to create a new resource on the server.
+curl -H "X-Dataverse-key:$API_TOKEN" -X POST "$SERVER_URL/api/dataverses/$PARENT" --upload-file dataverse-complete.json
+
+
+
+
+
+#2. update a dataverse
+
+export API_TOKEN=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+export SERVER_URL=https://demo.dataverse.org
+export DV_ALIAS=dvAlias
+
+curl -H "X-Dataverse-key:$API_TOKEN" -X PUT "$SERVER_URL/api/dataverses/$DV_ALIAS" --upload-file dataverse-complete.json
+# -X PUT: Replace an entire existing resource. 
+
+
+
+#3. view a dataverse
+
+export SERVER_URL=https://demo.dataverse.org
+export ID=root
+
+curl "$SERVER_URL/api/dataverses/$ID"
+
+
+# unpublished dv
+curl -H "X-Dataverse-key:$API_TOKEN" "$SERVER_URL/api/dataverses/testdddscience_updated"
+
+
+
+#4. delete a dv
+#
+
+
+export API_TOKEN=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+export SERVER_URL=https://demo.dataverse.org
+export ID=root
+
+curl -H "X-Dataverse-key:$API_TOKEN" -X DELETE "$SERVER_URL/api/dataverses/$ID"
+
+
+#5. show contents of a dv
+export API_TOKEN=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+export SERVER_URL=https://demo.dataverse.org
+export ID=root
+
+curl -H "X-Dataverse-key:$API_TOKEN" "$SERVER_URL/api/dataverses/$ID/contents"
+
+# similarly, query other dv information besides "contents"
+# storagesize
+# roles
+# facets
+# metadatablockfacets
+# inputLevels
+#
+
+curl -H "X-Dataverse-key:$API_TOKEN" "$SERVER_URL/api/dataverses/$ID/facets?returnDetails=true"
+
+# ?returnDetails=true is a query string, a way to pass parameters to the web server
+#
+#
+#5. list/set facets
+curl -H "X-Dataverse-key:$API_TOKEN" "$SERVER_URL/api/dataverses/$ID/facets"
+curl -H "X-Dataverse-key:$API_TOKEN" -X POST "$SERVER_URL/api/dataverses/$ID/facets" --upload-file dataverse-facets.json
+
